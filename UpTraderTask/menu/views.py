@@ -8,8 +8,6 @@ from menu.models import Menu, Post
 from menu.serializers import MenuSerializer
 
 class MenuView(ListView):
-    """
-    """
     model = Menu
     template_name = 'index.html'
 
@@ -19,26 +17,30 @@ class MenuView(ListView):
         return context
 
 class MenuViewDetail(DetailView):
+    """
+    Детализация статей.
+    """
     model = Menu
     template = 'content.html'
     
     def get_context_data(self, *args, **kwargs):
-        #root = self.model.objects.all()
         context = super(MenuViewDetail, self).get_context_data(*args, **kwargs)
         slug = self.kwargs['slug'].split('/')
         t_id = self.get_object().pk
         context['menu_view'] = self.model.objects.all()
-        #item = Post.objects.all()
         context['instance'] = Post.objects.filter(id=t_id)
         return context
 
 class MenuApiView(APIView): 
+    """
+    APIView для сериализованных данных категорий меню. 
+    """
     model = Menu
     
     def get(self, request):
-        menu_item  = self.model.objects.root_nodes()
-        serializer = MenuSerializer(menu_item, many=True)
-        return Response({'data': serializer.data})
+        menu_item  = self.model.objects.root_nodes() # собираем корешки
+        serializer = MenuSerializer(menu_item, many=True) # собираем сериализацию через экземпляр
+        return Response({'data': serializer.data}) # отправляем на клиент json
 
 
 

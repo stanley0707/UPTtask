@@ -4,6 +4,11 @@ from mptt.models import MPTTModel, TreeForeignKey
 
 
 class Menu(MPTTModel):
+    """
+    Модель категорий меню. Наследуется сама от себя. Для адекватного обращения к 
+    базе данных исользуется MPTT и корневое поле TreeForeignKey() а PROTECT для 
+    сохраненности цепочки наследовательности при удалении элементов.
+    """
     name   = models.CharField(
         max_length=100
         )
@@ -40,6 +45,11 @@ class Menu(MPTTModel):
         return reverse('menu-item', kwargs={'slug': self.slug})
 
 class Option(models.Model):
+    """
+    Опции отображения элемнтов.
+    expanded: true - открывет дочерние элементы таблица на клиенте.
+    checked: true - выбирает элемент 
+    """
     config_name = models.CharField(
         max_length=100
         )
@@ -61,6 +71,10 @@ class Option(models.Model):
         return self.config_name
 
 class Post(models.Model):
+    """
+    Задумывал бонустрэком реализовать побыстренькому статейки к каждой категории, однако,
+    решил оставить и не тратить на это время. Потом, на продакшене можно будет)
+    """
     category    = models.ForeignKey(
         'Menu',
         null=True,
