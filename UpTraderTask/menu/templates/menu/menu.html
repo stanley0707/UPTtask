@@ -1,0 +1,70 @@
+  {% verbatim %}
+   <div id="app">
+    <div class="examples">
+      <div class="example">
+        <div class="example-tree">
+          <tree 
+              :data="treeData0"
+              :options="treeOptions">
+            <span class="tree-text" slot-scope="{ node }">
+              <template v-if="!node.hasChildren()">
+                <i class="ion-android-star"></i>
+                {{ node.text }}
+              </template>
+
+              <template v-else>
+                <i :class="[node.expanded() ? 'ion-android-folder-open' : 'ion-android-folder']"></i>
+                {{ node.text }}
+              </template>
+            </span>
+          </tree>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endverbatim %}
+{% block script_menu%}
+<script>
+  var api_set = []
+  $.ajax({
+        url:'http://127.0.0.1:8000/api/menu/v1/',
+        type: "get",
+        dataType: 'json',
+        async: false,
+        success:(responce) => {
+            this.api_set = responce.data
+        },
+        error:(responce) => {
+            console.log('api error')
+        }
+  })
+  new Vue({
+        el: '#app',
+        data: function() {
+          return {
+          treeData0: this.getData0(),
+          treeOptions: {
+            checkbox: true,
+            deletion(node) {
+              return node.checked()
+            },
+            propertyNames: {
+                text: 'name',
+
+            }
+          }
+          }
+        },
+        methods: {
+          getData0() {
+            console.log(self.api_set)
+            return Promise.resolve(self.api_set)
+          },
+        
+          onNodeSelected(node) {
+            console.log(node.slug)
+          },
+      }
+  })
+</script>
+{% endblock script_menu%}

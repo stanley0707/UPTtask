@@ -1,0 +1,25 @@
+{% extends 'index.html' %}
+{% load mptt_tags %}
+{% load static  %}
+{% block content_menu %}
+
+<br>
+{% if instance %}
+ {% for i in instance %}
+ <div class="text-center"><h2>{{ i.title }}</h2></div>
+  <div class="row small-up-1 medium-up-3" >
+
+   <div class="column">
+    <a href="{{ i.slug }}">
+      <div class="card" style="width: 300px; border-color: black">
+         <div class="card-divider">
+           <strong>{{ i.content }}</strong>
+         </div>
+      </div>
+    </a>
+   </div>
+
+</div>
+{% endfor %}
+{% endif %}
+{% endblock content_menu %}

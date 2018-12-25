@@ -1,0 +1,25 @@
+{% load mptt_tags %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Custom Node</title>
+  <meta charset="UTF-8">
+
+  <!-- first import Vue -->
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+  <!-- import JavaScript -->
+  <script src="https://cdn.jsdelivr.net/npm/liquor-tree/dist/liquor-tree.umd.js"></script>
+  <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" media="all" rel="stylesheet" type="text/css" />
+
+</head>
+<body>
+{% include 'menu/menu.html' %}
+{% block content_menu %}
+{% endblock content_menu %}
+
+
+</body>
+{% block script_menu %}
+{% endblock script_menu %}
+</html>
